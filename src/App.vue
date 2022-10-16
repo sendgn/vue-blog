@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <h1>Страница с постами</h1>
+        <h1 style="margin-bottom: 15px;">Страница с постами</h1>
         <BaseInput
             v-model="searchQuery"
             placeholder="Поиск..."
@@ -28,6 +28,19 @@
             v-if="!isPostsLoading"
         />
         <div v-else>Идет загрузка...</div>
+        <div class="page__wrapper">
+            <div 
+                v-for="pageNumber in totalPages" 
+                :key="pageNumber"
+                class="page"
+                :class="{
+                    'page_current': page === pageNumber
+                }"
+                @click="changePage(pageNumber)"
+            >
+                {{ pageNumber }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -60,6 +73,9 @@ export default {
                 { value: 'body', name: 'По содержимому' },
             ],
             searchQuery: '',
+            page: 1,
+            limit: 10,
+            totalPages: 0,
         };
     },
     methods: {
@@ -73,10 +89,19 @@ export default {
         showDialog() {
             this.dialogVisible = true;
         },
+        changePage(pageNumber) {
+            this.page = pageNumber;
+        },
         async fetchPosts() {
             try {
                 this.isPostsLoading = true;
-                const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+                const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+                    params: {
+                        _page: this.page,
+                        _limit: this.limit,
+                    }
+                });
+                this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit);
                 this.posts = response.data;
             } catch (e) {
                 alert('Ошибка');
@@ -97,7 +122,9 @@ export default {
         },
     },
     watch: {
-        
+        page() {
+            this.fetchPosts();
+        }
     }
 };
 </script>
@@ -108,14 +135,25 @@ export default {
     padding: 0;
     box-sizing: border-box;
 }
-
 .app {
     padding: 20px;
 }
-
 .app__btns {
     display: flex;
     justify-content: space-between;
     margin: 15px 0;
+}
+.page {
+    border: 1px solid black;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+.page_current {
+    border: 2px solid darkslateblue;
+}
+.page__wrapper {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
 }
 </style>
