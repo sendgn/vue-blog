@@ -39,6 +39,7 @@ module.exports = {
                     loader: {
                         scss: 'vue-style-loader!css-loader!sass-loader',
                     },
+                    hotReload: true,
                 },
             },
             {
@@ -68,6 +69,9 @@ module.exports = {
                         loader: "sass-loader",
                         options: {
                             sourceMap: true,
+                            additionalData: `
+                                @import 'src/scss/utils/vars.scss';
+                            `
                         },
                     },
                 ],

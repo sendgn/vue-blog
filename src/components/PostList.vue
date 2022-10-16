@@ -11,23 +11,16 @@
 <script>
 import PostItem from './PostItem.vue';
 export default {
+    components: { PostItem },
     props: {
         posts: {
             type: Array,
             required: true
         },
     },
-    components: { PostItem },
 }
 </script>
 
 <style lang="scss" scoped>
-.post {
-    padding: 15px;
-    border: 2px solid darkslateblue;
-    
-    &:not(:first-child) {
-        margin-top: 15px;
-    }
-}
+
 </style>
