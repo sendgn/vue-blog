@@ -17,7 +17,7 @@ export default {
         updateInput(event) {
             this.$emit('update:modelValue', event.target.value);
         },
-    }
+    },
 }
 </script>
 
