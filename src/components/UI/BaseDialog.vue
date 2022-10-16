@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: 'MyDialog',
+    name: 'BaseDialog',
     props: {
         show: {
             type: Boolean,

@@ -1,20 +1,20 @@
 <template>
     <form class="form" @submit.prevent>
         <h4>Создание поста</h4>
-        <MyInput
+        <BaseInput
             v-model="post.title"
             type="text"
             placeholder="Название" />
-        <MyInput
+        <BaseInput
             v-model="post.body"
             type="text"
             placeholder="Описание" />
-        <MyButton
+        <BaseButton
             @click="createPost"
             style="align-self: flex-end;"
         >
             Создать
-        </MyButton>
+        </BaseButton>
     </form>
 </template>
 

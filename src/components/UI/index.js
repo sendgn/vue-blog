@@ -1,9 +1,11 @@
-import MyButton from './MyButton.vue';
-import MyInput from './MyInput.vue';
-import MyDialog from './MyDialog.vue';
+import BaseButton from './BaseButton.vue';
+import BaseInput from './BaseInput.vue';
+import BaseDialog from './BaseDialog.vue';
+import BaseSelect from './BaseSelect.vue';
 
 export default [
-    MyButton,
-    MyInput,
-    MyDialog
+    BaseButton,
+    BaseInput,
+    BaseDialog,
+    BaseSelect,
 ];

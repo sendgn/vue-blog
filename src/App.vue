@@ -1,17 +1,22 @@
 <template>
     <div class="app">
         <h1>Страница с постами</h1>
-        <MyButton
-            @click="showDialog"
-            style="margin: 15px 0;"
-        >
-            Создать пост
-        </MyButton>
-        <MyDialog v-model:show="dialogVisible">
+        <div class="app__btns">
+            <BaseButton
+                @click="showDialog"
+            >
+                Создать пост
+            </BaseButton>
+            <BaseSelect
+                v-model="selectedSort"
+                :options="sortOptions"
+            />
+        </div>
+        <BaseDialog v-model:show="dialogVisible">
             <PostForm
                 @create="createPost"
             />
-        </MyDialog>
+        </BaseDialog>
         <!-- props ':posts' same as 'v-bind:posts' -->
         <PostList
             :posts="posts"
@@ -23,24 +28,31 @@
 </template>
 
 <script>
+import axios from 'axios';
 import PostList from './components/PostList.vue';
 import PostForm from './components/PostForm.vue';
-import MyDialog from './components/UI/MyDialog.vue';
-import MyButton from './components/UI/MyButton.vue';
-import axios from 'axios';
+import BaseDialog from './components/UI/BaseDialog.vue';
+import BaseButton from './components/UI/BaseButton.vue';
+import BaseSelect from './components/UI/BaseSelect.vue';
 
 export default {
     components: {
-    PostList,
-    PostForm,
-    MyDialog,
-    MyButton
-},
+        PostList,
+        PostForm,
+        BaseDialog,
+        BaseButton,
+        BaseSelect,
+    },
     data() {
         return {
             posts: [],
             dialogVisible: false,
             isPostsLoading: false,
+            selectedSort: '',
+            sortOptions: [
+                { value: 'title', name: 'По названию' },
+                { value: 'body', name: 'По содержимому' },
+            ],
         };
     },
     methods: {
@@ -81,5 +93,11 @@ export default {
 
 .app {
     padding: 20px;
+}
+
+.app__btns {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
 }
 </style>
